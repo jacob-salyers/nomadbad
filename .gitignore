@@ -1,0 +1,3 @@
+# These are extensions for Vim recovery files
+.*.swp
+.*.swo
