@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="utf-8">
     <title>The Beginning</title>
+    <style type="text/css">
+
+      /* 
+         I used these for a previous project, not sure if I'll continue
+         though.
+       */
+      body {
+        margin-top:   15%;
+        margin-left:  7%;
+        margin-right: 7%;
+      }
+
+      div {
+        background-color: blue ;
+      }
+
+      jacobs-div {
+        background-color: red ;
+      }
+      .purple {
+        background-color: purple ;
+      }
+      #no-green{
+        background-color: green;
+      }
+
+    </style>
+    <script type="text/javascript">
+      class JacobsDiv extends HTMLDivElement {
+        constructor() {
+          super();
+        }
+      }
+      window.customElements.define('jacobs-div', JacobsDiv, { extends: 'div' });
+    </script>
   </head>
   <body>
-    <p>
+    <jacobs-div style="background-color:yellow"id="no-green" class="purple">
     Hi.
-    </p>
+    </jacobs-div>
+    <div>
+      Here is a normal div!
+    </div>
   </body>
 </html>
