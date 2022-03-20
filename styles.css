@@ -1,0 +1,45 @@
+
+body {
+	margin: 0px 0px 0px 0px;
+}
+
+a {
+	text-decoration:none;
+	color:inherit;
+}
+
+#body {
+	margin-left:  5%;
+	margin-right: 5%;
+	height: 1000px; /* TODO (jacob) This should change */
+	background-color: blue;
+}
+
+#header {
+	height: 120px;
+	background-color:red;
+	--pad: 70%;
+}
+
+#h-padding {
+	height: var(--pad);
+	background-color: orange;
+}
+
+#h-menu {
+	height: calc(100% - var(--pad));
+	width: 100%;
+	background-color: green;
+}
+
+.h-menu-row {
+	text-align: center;
+	vertical-align: middle;
+}
+
+#footer {
+	height: 100px;
+	background-color: purple;
+}
+
+
