@@ -1,6 +1,23 @@
+:root{
+	--red: #B91F26;
+	--black: #071013;
+	--white: #F7FFF7;
+	--grey: #86836D;
+	--yellow: #FFD131;
+	color: var(--black);
+}
 
 body {
 	margin: 0px 0px 0px 0px;
+	background-color: var(--grey);
+}
+
+p, h1 {
+	padding-left: 15px;
+}
+
+tr {
+	text-align: center;
 }
 
 a {
@@ -12,34 +29,58 @@ a {
 	margin-left:  5%;
 	margin-right: 5%;
 	height: 1000px; /* TODO (jacob) This should change */
-	background-color: blue;
+	background-color: var(--white);
+	box-shadow: 0 0 30px;
+}
+
+#schedule {
+	width:100%;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.schedule-cell {
+	width: calc(100% / 8);
+	padding-top: 15px;
+	vertical-align: middle;
 }
 
 #header {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
 	height: 120px;
-	background-color:red;
+	width: 100%;
+	background-color: var(--black);
+	color: var(--red);
 	--pad: 70%;
+}
+
+#h-name {
+ font-size:30pt; 
 }
 
 #h-padding {
 	height: var(--pad);
-	background-color: orange;
+	background-color: inherit;
+	display: flex;    		 /* So the flex stuff is kind of magic */
+	flex-direction: column;  /* See here: https://css-tricks.com/centering-css-complete-guide/ */
+	justify-content: center;
+	resize: vertical;
 }
 
 #h-menu {
 	height: calc(100% - var(--pad));
 	width: 100%;
-	background-color: green;
+	background-color: inherit;
 }
 
 .h-menu-row {
-	text-align: center;
 	vertical-align: middle;
+	width: calc(100% / 4);
 }
 
 #footer {
 	height: 100px;
-	background-color: purple;
+	background-color: var(--red);
 }
-
-
