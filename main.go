@@ -3,21 +3,18 @@ package main
 import (
 	"net/http"
 	"log"
-	"encoding/json"
-	"os"
-	"time"
 )
 
 func main() {
 	// TODO (jacob): wrap the handler to do templating
-	http.Handle("/", http.FileServer(http.Dir("static")))
-	log.Print(http.ListenAndServe(":80", nil))
+	http.Handle("/", logWrapper(http.FileServer(http.Dir("static"))))
+	log.Fatal(http.ListenAndServeTLS(":443", "/etc/letsencrypt/live/nomad-jiujitsu.com/fullchain.pem", "/etc/letsencrypt/live/nomad-jiujitsu.com/privkey.pem", nil))
 }
 
 func logWrapper(wrappedHandler http.Handler) http.Handler {
 	return http.HandlerFunc(
 		func(res http.ResponseWriter, req *http.Request) {
-			log.Print(req.RemoteAddr)
+			log.Print(req.RemoteAddr + " " + req.URL.Host + req.URL.Path + "?" + req.URL.RawQuery)
 			wrappedHandler.ServeHTTP(res, req)
 		})
 }
