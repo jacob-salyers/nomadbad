@@ -6,8 +6,7 @@ body {
 	margin: 0px 0px 0px 0px;
 }
 
-p, h1 {
-	/*TODO fix */
+p {
 	padding-left: 15px;
 }
 
@@ -34,6 +33,19 @@ hr {
 	margin-right: 5%;
 	min-height: 500px;
 	z-index: 1;
+}
+
+.under-heading {
+	margin:0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+#body .indented {
+	text-indent:2em;
 }
 
 /********************************************************************
@@ -82,10 +94,10 @@ hr {
  ********************************************************************/
 
 #footer {
-	height: 125px;
+	height: 90px;
 	z-index: 2;
 	width: 100%;
-	position: absolute;
+	position: sticky;
 	bottom: 0;
 	display: flex;
 	flex-direction: column;
@@ -93,6 +105,7 @@ hr {
 }
 
 #footer hr {
+	margin-top: 0;
 	margin-bottom: 20px;
 }
 
