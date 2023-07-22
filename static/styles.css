@@ -36,16 +36,6 @@ hr {
 }
 
 /* move this */
-.under-heading {
-	margin:0;
-	padding: 0;
-	width: 100%;
-	height: 100%;
-	display: flex;
-	justify-content: center;
-}
-
-/* move this */
 #body .indented {
 	text-indent:2em;
 }
@@ -113,6 +103,19 @@ hr {
 
 #footer span {
 	margin-left: 1em;
+}
+
+/********************************************************************
+ *							HOME FORMATTING							*
+ ********************************************************************/
+
+.under-heading {
+	margin: 0 0 15px 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
 }
 
 /********************************************************************
