@@ -3,12 +3,20 @@ package main
 import (
 	"net/http"
 	"log"
+	"flag"
 )
 
 func main() {
+	useSSL := flag.Bool("s", false, "Toggles http/https")
 	// TODO (jacob): wrap the handler to do templating
+
 	http.Handle("/", logWrapper(http.FileServer(http.Dir("static"))))
-	log.Fatal(http.ListenAndServeTLS(":443", "/etc/letsencrypt/live/nomad-jiujitsu.com/fullchain.pem", "/etc/letsencrypt/live/nomad-jiujitsu.com/privkey.pem", nil))
+
+	if *useSSL {
+		log.Fatal(http.ListenAndServeTLS(":443", "/etc/letsencrypt/live/nomad-jiujitsu.com/fullchain.pem", "/etc/letsencrypt/live/nomad-jiujitsu.com/privkey.pem", nil))
+	} else {
+		log.Fatal(http.ListenAndServe(":8080", nil))
+	}
 }
 
 func logWrapper(wrappedHandler http.Handler) http.Handler {
