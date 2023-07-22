@@ -2,46 +2,49 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Nomad Jiu Jitsu</title>
+    <title>Nomad</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="colors.css">
+    
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="milligram.css">
+
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index.css">
   </head>
   <body>
     <div id="header">
-      <div id="h-padding">
-        <div id="h-name">
-          <a href="./index.html">Nomad Jiu Jitsu</a>
-        </div>
+      <div id="padding">
+        <a id="name" href="./index.html">Nomad Jiu Jitsu</a>
       </div>
-      <table id="h-menu">
+      <table id="menu">
         <tr>
-          <td class="h-menu-row">
-            <a href="./index.html">HOME</a>
-          </td>
-          <td class="h-menu-row">
+          <td class="menu-row">
             <a href="./about.html">ABOUT</a>
           </td>
-          <td class="h-menu-row">
+          <td class="menu-row">
             <a href="./schedule.html">SCHEDULE</a>
           </td>
-          <td class="h-menu-row">
-            <a href="./contact_us.html">CONTACT US</a>
+          <td class="menu-row">
+            <a href="./contact.html">CONTACT</a>
+          </td>
+          <td class="menu-row">
+            <a href="./404.html">LOG IN</a>
           </td>
         </tr>
       </table>
     </div>
 
     <div id="body">
-      <!-- 
-        h1's margin was overflowing, creating a white border I didn't
-        like, so I replaced it with padding. We won't need this
-        if #body's background color matches body's background color.
-      -->
-      <h1 style="margin-top:0; padding-top:.67em">
+      <h1>
         Home
       </h1>
-      <p>Description text!</p>
     </div>
-    <div id="footer">
+    <div class="image-container">
+      <p class="superimpose">Description text!</p>
+      <video autoplay muted loop style="width:100%">
+        <source src="jorgevaskren.mp4" type="video/mp4">
+      </video>
     </div>
   </body>
 </html>

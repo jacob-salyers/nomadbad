@@ -1,18 +1,13 @@
-:root{
-	--red: #B91F26;
-	--black: #071013;
-	--white: #F7FFF7;
-	--grey: #86836D;
-	--yellow: #FFD131;
-	color: var(--black);
-}
+/********************************************************************
+ * 						TOP LEVEL FORMATTING						*
+ ********************************************************************/
 
 body {
 	margin: 0px 0px 0px 0px;
-	background-color: var(--grey);
 }
 
 p, h1 {
+	/*TODO fix */
 	padding-left: 15px;
 }
 
@@ -25,24 +20,14 @@ a {
 	color:inherit;
 }
 
+h1 {
+	color: var(--accent);
+}
+
 #body {
+	margin-top: 3%;
 	margin-left:  5%;
 	margin-right: 5%;
-	height: 1000px; /* TODO (jacob) This should change */
-	background-color: var(--white);
-	box-shadow: 0 0 30px;
-}
-
-#schedule {
-	width:100%;
-	padding-left: 15px;
-	padding-right: 15px;
-}
-
-.schedule-cell {
-	width: calc(100% / 8);
-	padding-top: 15px;
-	vertical-align: middle;
 }
 
 #header {
@@ -51,16 +36,20 @@ a {
 	top: 0;
 	height: 120px;
 	width: 100%;
-	background-color: var(--black);
-	color: var(--red);
+	color: var(--accent);
 	--pad: 70%;
 }
 
-#h-name {
+/********************************************************************
+ * 						   HEADER FORMATTING						*
+ ********************************************************************/
+
+#header #name {
  font-size:30pt; 
+ padding-left: 15px;
 }
 
-#h-padding {
+#header #padding {
 	height: var(--pad);
 	background-color: inherit;
 	display: flex;    		 /* So the flex stuff is kind of magic */
@@ -69,15 +58,15 @@ a {
 	resize: vertical;
 }
 
-#h-menu {
+#header #menu {
 	height: calc(100% - var(--pad));
 	width: 100%;
 	background-color: inherit;
 }
 
-.h-menu-row {
+#header .menu-row {
 	vertical-align: middle;
-	width: calc(100% / 4);
+	width: calc(100% / 5);
 }
 
 #footer {
