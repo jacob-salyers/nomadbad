@@ -15,7 +15,7 @@ func main() {
 
 	if *useSSL {
 		log.Print("Starting on port 443, with redirect from 80")
-		go redirectToHTTPS()
+		//go redirectToHTTPS()
 		log.Fatal(http.ListenAndServeTLS(":443", "/etc/letsencrypt/live/nomad-jiujitsu.com/fullchain.pem", "/etc/letsencrypt/live/nomad-jiujitsu.com/privkey.pem", nil))
 	} else {
 		log.Print("Starting on port 8080")
