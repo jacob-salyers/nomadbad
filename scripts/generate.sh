@@ -7,7 +7,7 @@ then
 	exit 1
 fi
 d=`pwd`
-cd ~/code/nomad
+cd $CODE_DIR/nomad
 
 for file in `ls templates/pages`
 do
