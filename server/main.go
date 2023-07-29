@@ -37,6 +37,7 @@ func redirectToHTTPS() {
 		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			u := r.URL
 			u.Scheme = "https"
+			log.Print(u.String())
 			http.Redirect(w,r,u.String(), http.StatusMovedPermanently)
 		}),
 	}
