@@ -31,17 +31,11 @@ func logWrapper(wrappedHandler http.Handler) http.Handler {
 		})
 }
 
+func redirectHelper(res http.ResponseWriter, req *http.Request) {
+	log.Print("Redirecting...")
+	http.Redirect(res, req, "https://nomad-jiujitsu.com" + req.RequestURI, http.StatusMovedPermanently)
+}
+
 func redirectToHTTPS() {
-	log.Print("Starting http redirector")
-	httpServer := http.Server{
-		Addr: ":80",
-		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			log.Print("in redirector")
-			u := r.URL
-			u.Scheme = "https"
-			log.Print(u.String())
-			http.Redirect(w,r,u.String(), http.StatusMovedPermanently)
-		}),
-	}
-	log.Fatal(httpServer.ListenAndServe())
+	log.Fatal(http.ListenAndServe(":80", http.HandlerFunc(redirectHelper)))
 }
