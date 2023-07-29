@@ -18,8 +18,8 @@ func main() {
 		go redirectToHTTPS()
 		log.Fatal(http.ListenAndServeTLS(":443", "/etc/letsencrypt/live/nomad-jiujitsu.com/fullchain.pem", "/etc/letsencrypt/live/nomad-jiujitsu.com/privkey.pem", nil))
 	} else {
-		log.Print("Starting on port 8080")
-		log.Fatal(http.ListenAndServe(":8080", nil))
+		log.Print("Starting on port 80")
+		log.Fatal(http.ListenAndServe(":80", nil))
 	}
 }
 
