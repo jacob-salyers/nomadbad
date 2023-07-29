@@ -14,7 +14,8 @@ func main() {
 	http.Handle("/", logWrapper(http.FileServer(http.Dir("static"))))
 
 	if *useSSL {
-		log.Print("Starting on port 443")
+		log.Print("Starting on port 443, with redirect from 80")
+		go redirectToHTTPS()
 		log.Fatal(http.ListenAndServeTLS(":443", "/etc/letsencrypt/live/nomad-jiujitsu.com/fullchain.pem", "/etc/letsencrypt/live/nomad-jiujitsu.com/privkey.pem", nil))
 	} else {
 		log.Print("Starting on port 8080")
@@ -30,25 +31,14 @@ func logWrapper(wrappedHandler http.Handler) http.Handler {
 		})
 }
 
-
-/*
-type blah struct {
-	Id int
-	Name string
-}
-
-
-func loadDatabase(path string, obj *blah) error {
-	bytes, err := os.ReadFile(path)
-	if (err != nil) {
-		return err
+func redirectToHTTPS() {
+	httpServer := http.Server{
+		Addr: ":80",
+		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			u := r.URL
+			u.Scheme = "https"
+			http.Redirect(w,r,u.String(), http.StatusMovedPermanently)
+		}),
 	}
-
-	err = json.Unmarshal(bytes, obj)
-	if (err != nil) {
-		return err
-	}
-
-	return nil
+	log.Fatal(httpServer.ListenAndServe())
 }
-*/
