@@ -32,9 +32,11 @@ func logWrapper(wrappedHandler http.Handler) http.Handler {
 }
 
 func redirectToHTTPS() {
+	log.Print("Starting http redirector")
 	httpServer := http.Server{
 		Addr: ":80",
 		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			log.Print("in redirector")
 			u := r.URL
 			u.Scheme = "https"
 			log.Print(u.String())
