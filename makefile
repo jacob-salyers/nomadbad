@@ -1,6 +1,8 @@
 
 all: build gen kill start
 
+local: build gen
+
 build:
 	(cd server ; go build && mv nomad ..)
 
