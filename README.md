@@ -31,3 +31,4 @@ the hosting platform GitHub as a centralized repository for our changes.
 
 Try running `git log` to see what I've done so far.
 ## This is a post-receive hook test!
+This allows me to deploy with a single command! It's really nice.
