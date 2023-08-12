@@ -13,4 +13,4 @@ kill:
 	./scripts/kill.sh
 
 start:
-	./scripts/start.sh
+	./scripts/start.sh &
