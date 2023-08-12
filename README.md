@@ -34,3 +34,4 @@ Try running `git log` to see what I've done so far.
 This allows me to deploy with a single command! It's really nice.
 But there are complexities regarding the $PATH variable and other user things.
 SO many things can go wrong, but I think we're nearly there
+The 5th time's the charm, hopefully.
