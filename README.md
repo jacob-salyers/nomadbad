@@ -30,3 +30,8 @@ We are using a version control program called Git, and we are using
 the hosting platform GitHub as a centralized repository for our changes.
 
 Try running `git log` to see what I've done so far.
+## This is a post-receive hook test!
+This allows me to deploy with a single command! It's really nice.
+But there are complexities regarding the $PATH variable and other user things.
+SO many things can go wrong, but I think we're nearly there
+The 5th time's the charm, hopefully.
