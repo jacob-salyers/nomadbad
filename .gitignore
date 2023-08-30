@@ -1,3 +1,7 @@
 # These are extensions for Vim recovery files
 .*.swp
 .*.swo
+
+nomad
+rr/target
+static/
