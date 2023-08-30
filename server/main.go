@@ -1,9 +1,10 @@
 package main
 
 import (
-	"net/http"
+	"fmt"
 	"log"
 	"flag"
+	"net/http"
 )
 
 func main() {
@@ -25,7 +26,9 @@ func main() {
 func logWrapper(wrappedHandler http.Handler) http.Handler {
 	return http.HandlerFunc(
 		func(res http.ResponseWriter, req *http.Request) {
-			log.Print(req.RemoteAddr + " " + req.URL.Host + req.URL.Path + "?" + req.URL.RawQuery)
+            log.Print(req.RemoteAddr + " " + req.URL.Host + req.URL.Path + "?" + req.URL.RawQuery)
+            fmt.Println(req.URL.Path)
+
 			wrappedHandler.ServeHTTP(res, req)
 		})
 }
