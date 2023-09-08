@@ -195,7 +195,6 @@ export function generateHTML(events) {
 
 				for (const day of days) {
 					let e = eventsThisMinute.find(e => e.days.includes(day));
-					console.error(JSON.stringify(e, null, 4));
 					acc += `\n\t\t<!--${day}--><td>${htmlEscape(e?.title ?? '')}</td>`
 				}
 				acc += '\n\t</tr>';
