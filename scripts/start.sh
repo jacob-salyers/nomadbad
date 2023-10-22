@@ -9,7 +9,7 @@ fi
 d=`pwd`
 cd $CODE_DIR/nomad
 
-sudo nohup ./nomad -s 2>&1 
+sudo nohup ./nomad -s 2>&1 &
 
 # Postlude
 cd $d
