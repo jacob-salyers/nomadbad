@@ -45,7 +45,7 @@ input[type='submit'] {
   background-color: var(--accent);
   border: 0.1rem solid var(--accent);
   border-radius: .4rem;
-  color: #fff;
+  color: var(--foreground-primary);
   cursor: pointer;
   display: inline-block;
   font-size: 1.1rem;
@@ -71,7 +71,7 @@ input[type='submit']:focus,
 input[type='submit']:hover {
   background-color: var(--foreground-primary);
   border-color: var(--foreground-primary);
-  color: #fff;
+  color: var(--background-primary);
   outline: 0;
 }
 
@@ -462,15 +462,6 @@ input[type='radio'] {
     margin-bottom: inherit;
     padding: 0 1.0rem;
   }
-}
-
-a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-a:focus, a:hover {
-  color: var(--foreground-primary);
 }
 
 dl,
