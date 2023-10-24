@@ -26,6 +26,10 @@ h1 { color: var(--accent); }
 
 hr { border-color: var(--border); }
 
+input {
+	color: var(--foreground-primary);
+}
+
 #body {
 	margin-top: 3%;
 	margin-left:  5%;
