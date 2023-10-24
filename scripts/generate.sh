@@ -8,7 +8,6 @@ then
 	exit 1
 fi
 dir="$CODE_DIR/nomad"
-echo "Dir: $dir" >> /home/kswnin/generate.log
 
 curl https://calendar.google.com/calendar/ical/d4d0773546ae6d7e69b104a3f0a6e612ee49bf31fcd87463de373f9819be336c%40group.calendar.google.com/private-1250974c781dffb16a03c7b44773371d/basic.ics \
 	| node $dir/scripts/calendarToHTML.mjs > $dir/templates/pages/schedule.html
@@ -21,7 +20,7 @@ sed "
 /~BODY~/ {
 	r $dir/templates/pages/$file
 	d
-}" $dir/templates/wrapper.html > $dir/static/$file
+}" $dir/templates/wrapper.html | sed "s#~ROOT#$NOMAD_ROOT#" > $dir/static/$file
 done
 
 echo "ending at: `date`" >> /home/kswnin/generate.log
