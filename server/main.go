@@ -60,7 +60,8 @@ func apiSubmit(res http.ResponseWriter, req *http.Request) {
 From: %s %s
 Reply-To: %s
 
-%s\n`,
+%s
+`,
 	req.FormValue("first_name"), req.FormValue("last_name"),
 	req.FormValue("email"), req.FormValue("message"));
 
