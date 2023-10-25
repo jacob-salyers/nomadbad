@@ -26,7 +26,7 @@ h1 { color: var(--accent); }
 
 hr { border-color: var(--border); }
 
-input {
+input, textarea {
 	color: var(--foreground-primary);
 }
 
