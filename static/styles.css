@@ -137,26 +137,26 @@ input, textarea {
 }
 
 /********************************************************************
- *						  CONTACT FORMATTING						*
+ *							 FORM FORMATTING						*
  ********************************************************************/
 
-.contact-form {
+form {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
 }
 
-.contact-form > #name {
+form > #name {
 	display: flex;
 	flex-direction:row;
 	flex: 1;
 	justify-content: space-between;
 }
 
-.contact-form > #name > div {
+form > #name > div {
 	width: 49%;
 }
 
-.contact-form > div {
+form > div {
 	width:100%;
 }

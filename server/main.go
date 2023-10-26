@@ -11,14 +11,14 @@ func main() {
 	local := flag.Bool("l", false, "Toggles local-only pages")
 	flag.Parse()
 
-	http.Handle("/api/submit", logWrapper(http.HandlerFunc(apiSubmit)))
-	http.Handle("/", logWrapper(http.FileServer(http.Dir("static"))))
-
 	if *local {
 		http.Handle("/api-local/sign-in", http.HandlerFunc(apiLocalSignIn))
 		http.Handle("/api-local/sign-up", http.HandlerFunc(apiLocalSignUp))
-		http.Handle("/local", http.FileServer(http.Dir("local")))
+		http.Handle("/local/", http.StripPrefix("/local/", http.FileServer(http.Dir("local"))))
 	}
+
+	http.Handle("/api/submit", logWrapper(http.HandlerFunc(apiSubmit)))
+	http.Handle("/", logWrapper(http.FileServer(http.Dir("static"))))
 
 	if *useSSL {
 		log.Print("Starting on port 443, with redirect from 80")

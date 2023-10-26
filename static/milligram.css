@@ -214,6 +214,7 @@ input:not([type]),
 textarea,
 select {
   -webkit-appearance: none;
+  color: var(--foreground-primary);	
   background-color: transparent;
   border: 0.1rem solid var(--foreground-secondary);
   border-radius: .4rem;
@@ -240,8 +241,10 @@ input[type='week']:focus,
 input:not([type]):focus,
 textarea:focus,
 select:focus {
-  border-color: var(--accent);
-  outline: 0;
+	color: var(--foreground-primary);	
+	border-color: var(--accent);
+	background-color: var(--background-primary);
+	outline: 0;
 }
 
 select {
