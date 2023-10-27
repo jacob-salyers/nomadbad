@@ -29,7 +29,7 @@ func main() {
 			"/etc/letsencrypt/live/nomad-jiujitsu.com/privkey.pem",
 			nil))
 	} else {
-		log.Print("Starting on port 8080")
-		log.Fatal(http.ListenAndServe(":8080", nil))
+		log.Print("Starting on port 8000")
+		log.Fatal(http.ListenAndServe(":8000", nil))
 	}
 }

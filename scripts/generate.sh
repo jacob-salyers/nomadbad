@@ -39,4 +39,4 @@ sed "
 }" $dir/templates/local_wrapper.html | sed "s#~ROOT#$NOMAD_ROOT#" > $dir/local/$file
 done
 
-sed "s#~ROOT#$NOMAD_ROOT#" < $dir/templates/roboto.css > $dir/static/roboto.css
+sed "s#~ROOT#$NOMAD_ROOT#" < $dir/templates/roboto.css > $dir/static/css/roboto.css

@@ -1,26 +1,25 @@
 
 <div id="body">
 	<h1>Sign In</h1>
-	<p>
-	If you have any questions or concerns about our schedule or pricing, please reach out using the form below.
-	</p>
 	<form action="~ROOT/api-local/sign-in" 
 		  method="post">
-		<label for="student">Student:</label>
-		<select name="student">
-			<option value=""></option>
-			<option value="1">Jesse Lastname</option>
-			<option value="2">Jacob Salyers</option>
-		</select>
-		<label for="class">Class:</label>
-		<select name="class">
-			<option value=""></option>
-			<option value="0">Jiu-Jitsu</option>
-			<option value="1">Wrestling</option>
-			<option value="2">Open Mat</option>
-		</select>
 		<div>
-			<input value="Submit" type="submit" name="submit"/>
+			<label for="student">Student</label>
+			<select name="student" required>
+				<option></option>
+				<option>Jesse Lastname</option>
+				<option>Jacob Salyers</option>
+			</select>
 		</div>
+		<div>
+			<label for="class">Class</label>
+			<select name="class" required>
+				<option></option>
+				<option>Jiu-Jitsu</option>
+				<option>Wrestling</option>
+				<option>Open Mat</option>
+			</select>
+		</div>
+		<input value="Submit" type="submit"/>
 	</form>
 </div>

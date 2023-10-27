@@ -1,6 +1,6 @@
 
 import { promises as fs } from 'fs';
-import { parseICS, generateHTML } from './calendarToHTML-header.mjs';
+import { parseICS, generateHTML, generateClassOptions } from './calendarToHTML-header.mjs';
 
 const schedulePath = process.argv[2] ?? '/dev/stdout';
 const eventsPath = process.argv[3];
@@ -14,6 +14,9 @@ new Promise((resolve, reject) => {
 	process.stdin.on('end', () => resolve(acc));
 })
 	.then(parseICS)
+	.then(generateClassOptions)
+	.then(x => console.log(JSON.stringify(x, null, 4)));
+	/*
 	.then(generateHTML)
 	.then(events => {
 		const promises = [];
@@ -22,4 +25,4 @@ new Promise((resolve, reject) => {
 			promises.push(fs.writeFile(eventsPath, events.upcoming));
 
 		return Promise.all(promises);
-	});
+	});*/

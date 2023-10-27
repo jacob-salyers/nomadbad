@@ -125,17 +125,17 @@ form {
 	align-items: flex-end;
 }
 
-form > #name {
+form > div {
+	width:100%;
+}
+
+form > .horizontal {
 	display: flex;
 	flex-direction:row;
 	flex: 1;
 	justify-content: space-between;
 }
 
-form > #name > div {
+form > .horizontal > div {
 	width: 49%;
-}
-
-form > div {
-	width:100%;
 }
