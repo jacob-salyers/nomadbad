@@ -1,3 +1,12 @@
+const days = [
+	'Sunday',
+	'Monday',
+	'Tuesday',
+	'Wednesday',
+	'Thursday',
+	'Friday',
+	'Saturday'
+];
 
 export function parseICS(file) {
 	function expandDates(input) {
@@ -159,15 +168,6 @@ export function generateHTML(events) {
 		<td>Saturday</td>
 	</tr>`;
 
-		const days = [
-			'Sunday',
-			'Monday',
-			'Tuesday',
-			'Wednesday',
-			'Thursday',
-			'Friday',
-			'Saturday'
-		];
 
 		events.sort((a, b) => -(b.start.hour+b.start.minute/60) + (a.start.hour+a.start.minute/60));
 		const hours = [...new Set(events.map(e => e.start.hour))];
@@ -209,4 +209,18 @@ export function generateHTML(events) {
 		upcoming: upcomingEvents(events.filter(el => el.recurring === 'never')),
 		recurring: recurringEvents(events.filter(el => el.recurring === 'weekly'))
 	};
+}
+
+
+export function generateClassOptions(arr) {
+	const today = days[new Date().getDay()];
+	const arr2 = arr.filter(el => el.recurring === 'weekly')
+		.map(el => ({
+			title: el.title,
+			display_title: '',
+			days: el.days,
+			instructor: ''
+		}));
+
+	return arr2;
 }
