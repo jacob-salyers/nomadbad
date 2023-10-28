@@ -1,7 +1,21 @@
 
+<script>
+let cc = '';
+function extractCCNumber(event) {
+	const extract = /B(\d{15,16})/;
+	const res = extract.exec(event.target.value);
+	if(res) {
+		cc = res[1];
+		event.target.value = cc;
+	} else if (cc) {
+		event.target.value = cc;
+	}
+}
+</script>
 <div id="body">
 	<h1>Sign Up</h1>
-	<form action="~ROOT/api/submit" 
+	<form name="signUp"
+		  action="~ROOT/api-local/sign-up" 
 		  autocomplete="off"
 		  method="post">
 		<div class="horizontal">
@@ -37,6 +51,7 @@
 				   title="15 or 16 digits"
 				   autocomplete="off"
 				   name="cc_number"
+				   onkeyup="extractCCNumber(event)"
 				   required/>
 		</div>
 		<div class="horizontal">
@@ -59,4 +74,5 @@
 		</div>
 		<input value="Submit" type="submit"/>
 	</form>
+	<script> window.onunload = () => {}; document.signUp.reset(); </script>
 </div>

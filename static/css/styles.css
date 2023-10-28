@@ -139,3 +139,12 @@ form > .horizontal {
 form > .horizontal > div {
 	width: 49%;
 }
+
+/********************************************************************
+ *							 BUTTON FOOTER							*
+ ********************************************************************/
+
+.button-footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
