@@ -1,3 +1,5 @@
+import crypto from 'crypto';
+
 const days = [
 	'Sunday',
 	'Monday',
@@ -211,16 +213,37 @@ export function generateHTML(events) {
 	};
 }
 
-
-export function generateClassOptions(arr) {
+export function generateSignIn(classes, students) {
 	const today = days[new Date().getDay()];
-	const arr2 = arr.filter(el => el.recurring === 'weekly')
-		.map(el => ({
-			title: el.title,
-			display_title: '',
-			days: el.days,
-			instructor: ''
-		}));
+	
+	const todaysClasses = classes.filter(c =>
+		c.days.includes(today));
 
-	return arr2;
+	console.log(`<div id="body">
+<h1>Sign In</h1>
+<form action="~ROOT/api-local/sign-in" 
+	  method="post">
+	<div>
+		<label for="student">Student</label>
+		<select name="student" required>
+			<option></option>`);
+
+	for (const s of students)
+		console.log(`<option value="${s.id}">${s.first_name} ${s.last_name}</option>`);
+
+	console.log(`</select>
+		</div>
+		<div>
+			<label for="class">Class</label>
+			<select name="class" required>
+				<option></option>`);
+
+	for (const c of todaysClasses)
+		console.log(`<option value="${c.id}">${c.display_title}</option>`);
+	
+	console.log(`</select>
+		</div>
+		<input value="Submit" type="submit"/>
+	</form>
+</div>`);
 }
