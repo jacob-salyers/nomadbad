@@ -221,7 +221,8 @@ export function generateSignIn(classes, students) {
 
 	console.log(`<div id="body">
 <h1>Sign In</h1>
-<form action="~ROOT/api-local/sign-in" 
+<form name="signIn"
+	  action="~ROOT/api-local/sign-in" 
 	  method="post">
 	<div>
 		<label for="student">Student</label>
@@ -245,5 +246,6 @@ export function generateSignIn(classes, students) {
 		</div>
 		<input value="Submit" type="submit"/>
 	</form>
+	<script>window.onunload = () => {}; document.signIn.reset()</script>
 </div>`);
 }

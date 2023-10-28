@@ -25,7 +25,6 @@ Reply-To: %s
 	req.FormValue("first_name"), req.FormValue("last_name"),
 	req.FormValue("email"), req.FormValue("message"));
 
-
 	if _, err := f.Write([]byte(toPrint)); err != nil {
 		log.Print(err)
 		http.ServeFile(res, req, "static/submission_failure.html")
