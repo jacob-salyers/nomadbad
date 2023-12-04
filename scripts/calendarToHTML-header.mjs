@@ -183,9 +183,11 @@ export function generateHTML(events) {
 
         const today = (new Date()).setHours(0,0,0,0);
         events = events.filter(el => {
-            const end = el?.end?.jsDate?.getTime() ?? 0;
+            const end = el?.end?.jsDate?.getTime();
+            const start = el?.start?.jsDate?.getTime();
 
-            return end < today;
+            return end == null 
+                || (end > today && start <= today);
         });
 		events.sort((a, b) => -(b.start.hour+b.start.minute/60) + (a.start.hour+a.start.minute/60));
 		const hours = [...new Set(events.map(e => e.start.hour))];
