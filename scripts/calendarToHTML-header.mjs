@@ -1,41 +1,41 @@
+const months = [
+    { text: 'January', ord: 0 },
+    { text: 'February', ord: 1 },
+    { text: 'March', ord: 2 },
+    { text: 'April', ord: 3 },
+    { text: 'May', ord: 4 },
+    { text: 'June', ord: 5 },
+    { text: 'July', ord:6 },
+    { text: 'August', ord: 7},
+    { text: 'September', ord: 8 },
+    { text: 'October', ord: 9 },
+    { text: 'November', ord: 10 },
+    { text: 'December', ord: 11 }
+];
+
+const days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
+];
 
 export function parseICS(file) {
 	function expandDates(input) {
-		function expandMonth(input) {
-			switch (input) {
-				case '01':
-					return { text: 'January', ord: 0 };
-				case '02':
-					return { text: 'February', ord: 1 };
-				case '03':
-					return { text: 'March', ord: 2 };
-				case '04':
-					return { text: 'April', ord: 3 };
-				case '05':
-					return { text: 'May', ord: 4 };
-				case '06':
-					return { text: 'June', ord: 5 };
-				case '07':
-					return { text: 'July', ord:6 };
-				case '08':
-					return { text: 'August', ord: 7};
-				case '09':
-					return { text: 'September', ord: 8 };
-				case '10':
-					return { text: 'October', ord: 9 };
-				case '11': 
-					return { text: 'November', ord: 10 };
-				case '12':
-					return { text: 'December', ord: 11 };
-			}
-		}
+		function expandMonth(input) { return months[Number(input) - 1]; }
+        const str = `${Number(input.substring(6,8))} ${expandMonth(input.substring(4,6)).text} ${Number(input.substring(0,4))}`;
 
 		return {
 			year: Number(input.substring(0,4)),
 			month: expandMonth(input.substring(4,6)),
 			day: Number(input.substring(6,8)),
 			hour: Number(input.substring(9,11)),
-			minute: input.substring(11,13)
+			minute: input.substring(11,13),
+            jsDate: new Date(Date.parse(str))
 		};
 	}
 
@@ -79,6 +79,7 @@ export function parseICS(file) {
 			const k = lineArr[0];
 			const v = lineArr[1];
 			const e = events[i];
+            let count;
 
 
 			switch (k) {
@@ -88,7 +89,6 @@ export function parseICS(file) {
 					break;
 				case 'DTEND;TZID=America/Chicago':
 				case 'DTEND':
-					e.end = expandDates(v);
 					break;
 				case 'RRULE':
 					for (const f of v.split(';')) {
@@ -103,6 +103,14 @@ export function parseICS(file) {
 							case 'BYDAY':
 								e.days = v2.split(',').map(expandDays);
 								break;
+                            case 'COUNT':
+                                count = Number(v2);
+                                break;
+                            case 'UNTIL':
+                                e.end = expandDates(v2);
+                                break;
+                            case 'WKST':
+                                break;
 							default:
 								throw new Error(`Unexpected key in RRULE: ${k2}`);
 						}
@@ -119,6 +127,18 @@ export function parseICS(file) {
 					break;
 			}
 
+            if (count) {
+                const d = new Date(e.start.jsDate.getTime());
+                d.setDate(d.getDate() + count*7+1);
+                e.end = {
+                    year: d.getFullYear(),
+                    month: months[d.getMonth()],
+                    day: d.getDate(),
+                    hour: 0,
+                    minute: 0,
+                    jsDate: d
+                };
+            }
 		} else {
 			if (events[i].recurring == null)
 				events[i].recurring = 'never';
@@ -169,6 +189,12 @@ export function generateHTML(events) {
 			'Saturday'
 		];
 
+        const today = (new Date()).setHours(0,0,0,0);
+        events = events.filter(el => {
+            const end = el?.end?.jsDate?.getTime() ?? 0;
+
+            return end < today;
+        });
 		events.sort((a, b) => -(b.start.hour+b.start.minute/60) + (a.start.hour+a.start.minute/60));
 		const hours = [...new Set(events.map(e => e.start.hour))];
 		const minutes = [...new Set(events.map(e => e.start.minute))];
