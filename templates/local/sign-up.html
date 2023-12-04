@@ -1,0 +1,78 @@
+
+<script>
+let cc = '';
+function extractCCNumber(event) {
+	const extract = /B(\d{15,16})/;
+	const res = extract.exec(event.target.value);
+	if(res) {
+		cc = res[1];
+		event.target.value = cc;
+	} else if (cc) {
+		event.target.value = cc;
+	}
+}
+</script>
+<div id="body">
+	<h1>Sign Up</h1>
+	<form name="signUp"
+		  action="~ROOT/api-local/sign-up" 
+		  autocomplete="off"
+		  method="post">
+		<div class="horizontal">
+			<div>
+				<label for="first_name">First Name</label>
+				<input type="text" name="first_name" required/>
+			</div>
+			<div>
+				<label for="last_name">Last Name</label>
+				<input type="text" name="last_name" required/>
+			</div>
+		</div>
+		<div>
+			<label for="email">Email</label>
+			<input type="email"
+				   autocomplete="off"
+				   name="email"
+				   required/>
+		</div>
+
+		<div>
+			<label for="plan">Plan</label>
+			<select name="plan">
+				<option></option>
+				<option value="primary_gym_plan">Unlimited</option>
+				<option value="partner_gym_plan">2x / Week</option>
+			</select>
+		</div>
+		<div>
+			<label for="cc_number">Credit Card Number</label>
+			<input type="text"
+				   pattern="\d{15,16}"
+				   title="15 or 16 digits"
+				   autocomplete="off"
+				   name="cc_number"
+				   onkeyup="extractCCNumber(event)"
+				   required/>
+		</div>
+		<div class="horizontal">
+			<div>
+				<label for="ccexp">Expiration Date</label>
+				<input type="text" 
+					   pattern="\d{2}\/\d{2}"
+					   title="Exp"
+					   name="ccexp"
+					   required/>
+			</div>
+			<div>
+				<label for="cvv">CVV</label>
+				<input type="text" 
+					   pattern="\d{3,4}"
+					   title="3 or 4 digits"
+					   name="cvv" 
+					   required/>
+			</div>
+		</div>
+		<input value="Submit" type="submit"/>
+	</form>
+	<script> window.onunload = () => {}; document.signUp.reset(); </script>
+</div>

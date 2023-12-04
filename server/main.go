@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"flag"
 	"net/http"
@@ -9,36 +8,28 @@ import (
 
 func main() {
 	useSSL := flag.Bool("s", false, "Toggles http/https")
+	local := flag.Bool("l", false, "Toggles local-only pages")
 	flag.Parse()
-	// TODO (jacob): wrap the handler to do templating
 
+	if *local {
+		http.Handle("/api-local/sign-in", http.HandlerFunc(apiLocalSignIn))
+		http.Handle("/api-local/sign-up", http.HandlerFunc(apiLocalSignUp))
+		http.Handle("/local/", http.StripPrefix("/local/", http.FileServer(http.Dir("local"))))
+	}
+
+	http.Handle("/api/submit", logWrapper(http.HandlerFunc(apiSubmit)))
 	http.Handle("/", logWrapper(http.FileServer(http.Dir("static"))))
 
 	if *useSSL {
 		log.Print("Starting on port 443, with redirect from 80")
 		go redirectToHTTPS()
-		log.Fatal(http.ListenAndServeTLS(":443", "/etc/letsencrypt/live/nomad-jiujitsu.com/fullchain.pem", "/etc/letsencrypt/live/nomad-jiujitsu.com/privkey.pem", nil))
+		log.Fatal(http.ListenAndServeTLS(
+			":443",
+			"/etc/letsencrypt/live/nomad-jiujitsu.com/fullchain.pem",
+			"/etc/letsencrypt/live/nomad-jiujitsu.com/privkey.pem",
+			nil))
 	} else {
-		log.Print("Starting on port 80")
-		log.Fatal(http.ListenAndServe(":80", nil))
+		log.Print("Starting on port 8000")
+		log.Fatal(http.ListenAndServe(":8000", nil))
 	}
-}
-
-func logWrapper(wrappedHandler http.Handler) http.Handler {
-	return http.HandlerFunc(
-		func(res http.ResponseWriter, req *http.Request) {
-            log.Print(req.RemoteAddr + " " + req.URL.Host + req.URL.Path + "?" + req.URL.RawQuery)
-            fmt.Println(req.URL.Path)
-
-			wrappedHandler.ServeHTTP(res, req)
-		})
-}
-
-func redirectHelper(res http.ResponseWriter, req *http.Request) {
-	log.Print("Redirecting...")
-	http.Redirect(res, req, "https://nomad-jiujitsu.com" + req.RequestURI, http.StatusMovedPermanently)
-}
-
-func redirectToHTTPS() {
-	log.Fatal(http.ListenAndServe(":80", http.HandlerFunc(redirectHelper)))
 }
