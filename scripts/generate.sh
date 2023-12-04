@@ -28,4 +28,4 @@ sed "
 }" $dir/templates/wrapper.html | sed "s#~ROOT#$NOMAD_ROOT#" > $dir/static/$file
 done
 
-. $dir/scripts/generate_local.sh
+#. $dir/scripts/generate_local.sh
