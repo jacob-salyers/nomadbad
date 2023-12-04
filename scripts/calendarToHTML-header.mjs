@@ -1,3 +1,5 @@
+import crypto from 'crypto';
+
 const months = [
     { text: 'January', ord: 0 },
     { text: 'February', ord: 1 },
@@ -14,14 +16,13 @@ const months = [
 ];
 
 const days = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday'
+	'Sunday',
+	'Monday',
+	'Tuesday',
+	'Wednesday',
+	'Thursday',
+	'Friday',
+	'Saturday'
 ];
 
 export function parseICS(file) {
@@ -179,15 +180,6 @@ export function generateHTML(events) {
 		<td>Saturday</td>
 	</tr>`;
 
-		const days = [
-			'Sunday',
-			'Monday',
-			'Tuesday',
-			'Wednesday',
-			'Thursday',
-			'Friday',
-			'Saturday'
-		];
 
         const today = (new Date()).setHours(0,0,0,0);
         events = events.filter(el => {
@@ -235,4 +227,41 @@ export function generateHTML(events) {
 		upcoming: upcomingEvents(events.filter(el => el.recurring === 'never')),
 		recurring: recurringEvents(events.filter(el => el.recurring === 'weekly'))
 	};
+}
+
+export function generateSignIn(classes, students) {
+	const today = days[new Date().getDay()];
+	
+	const todaysClasses = classes.filter(c =>
+		c.days.includes(today));
+
+	console.log(`<div id="body">
+<h1>Sign In</h1>
+<form name="signIn"
+	  action="~ROOT/api-local/sign-in" 
+	  method="post">
+	<div>
+		<label for="student">Student</label>
+		<select name="student" required>
+			<option></option>`);
+
+	for (const s of students)
+		console.log(`<option value="${s.id}">${s.first_name} ${s.last_name}</option>`);
+
+	console.log(`</select>
+		</div>
+		<div>
+			<label for="class">Class</label>
+			<select name="class" required>
+				<option></option>`);
+
+	for (const c of todaysClasses)
+		console.log(`<option value="${c.id}">${c.display_title}</option>`);
+	
+	console.log(`</select>
+		</div>
+		<input value="Submit" type="submit"/>
+	</form>
+	<script>window.onunload = () => {}; document.signIn.reset()</script>
+</div>`);
 }
