@@ -14,7 +14,7 @@ new Promise((resolve, reject) => {
 	process.stdin.on('end', () => resolve(acc));
 })
 	.then(parseICS)
-	.then(generateHTML)
+    .then(generateHTML)
 	.then(events => {
 		const promises = [];
 		promises.push(fs.writeFile(schedulePath, events.recurring));
