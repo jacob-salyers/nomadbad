@@ -16,20 +16,41 @@ func apiSubmit(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+    first := req.FormValue("first_name")
+    last := req.FormValue("last_name")
+    email := req.FormValue("email")
+    msg := req.FormValue("message")
+
 	toPrint := fmt.Sprintf(`
 From: %s %s
 Reply-To: %s
 
 %s
 `,
-	req.FormValue("first_name"), req.FormValue("last_name"),
-	req.FormValue("email"), req.FormValue("message"));
+	first, last, email, msg);
 
 	if _, err := f.Write([]byte(toPrint)); err != nil {
 		log.Print(err)
 		http.ServeFile(res, req, "static/submission_failure.html")
 		return
 	}
+
+    err = mailgun(MailGunInput {
+        ReplyTo: fmt.Sprintf( "%s %s <%s>", 
+            first,
+            last,
+            email),
+        From: "Nomad Form <mailgun@mg.nomad-jiujitsu.com>",
+        To: "caravancollective@outlook.com",
+        Subject: fmt.Sprintf("Form Submission from %s %s", 
+            first,
+            last),
+        Body: msg,
+        })
+
+    if err != nil {
+        log.Println(err)
+    }
 
 	if err := f.Close(); err != nil {
 		log.Print(err)
