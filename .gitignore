@@ -5,3 +5,6 @@
 nomad
 rr/target
 static/
+cred/
+
+server/credentials.go
