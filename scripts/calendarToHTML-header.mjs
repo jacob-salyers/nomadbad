@@ -41,7 +41,7 @@ export function parseICS(file) {
 	}
 
 	function expandDays(input) {
-		switch (input) {
+		switch (/[A-Z]{2}$/.exec(input)[0]) {
 			case 'MO':
 				return 'Monday';
 			case 'TU':
@@ -81,7 +81,6 @@ export function parseICS(file) {
 			const v = lineArr[1];
 			const e = events[i];
             let count;
-
 
 			switch (k) {
 				case 'DTSTART;TZID=America/Chicago':
@@ -141,7 +140,7 @@ export function parseICS(file) {
                 };
             }
 		} else {
-			if (events[i].recurring == null)
+			if (events[i].recurring == null || events[i].recurring == 'MONTHLY')
 				events[i].recurring = 'never';
 
 			i++;
