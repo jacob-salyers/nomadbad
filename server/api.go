@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
 	"net/http"
+	"os"
+	"strings"
+	"time"
 )
 
 func apiSubmit(res http.ResponseWriter, req *http.Request) {
@@ -21,15 +23,26 @@ func apiSubmit(res http.ResponseWriter, req *http.Request) {
     email := req.FormValue("email")
     msg := req.FormValue("message")
 
-	toPrint := fmt.Sprintf(`
-From: %s %s
-Reply-To: %s
+    now := time.Now()
+    var sb strings.Builder
+    sb.WriteString(now.String())
+    sb.WriteString("\n")
+	sb.WriteString(fmt.Sprintf("From: %s %s\n", first, last))
+    sb.WriteString(fmt.Sprintf("Reply-To: %s\n", email))
+    sb.WriteString("\t> ")
+    i := 0
+    for _, el := range strings.Split(msg, "") {
+        if (i >= 70 && el == " ") || el == "\n" {
+            i = 0
+            sb.WriteString("\n\t> ")
+        } else {
+            sb.WriteString(el)
+            i += 1
+        }
+    }
+    sb.WriteString("\n\n")
 
-%s
-`,
-	first, last, email, msg);
-
-	if _, err := f.Write([]byte(toPrint)); err != nil {
+	if _, err := f.Write([]byte(sb.String())); err != nil {
 		log.Print(err)
 		http.ServeFile(res, req, "static/submission_failure.html")
 		return
