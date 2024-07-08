@@ -5,6 +5,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+   _ "nomad/streetmed"
+
 )
 
 func main() {
