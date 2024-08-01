@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Notion internal integration example" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+        <title>Streetmed Signup Form</title>
+        <link rel="stylesheet" href="/streetmed/style.css" />
+    </head>
+    <body>
+        
+        <form id="form">
+            <p id="form-title"></p>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name"/>
+            <label for="role">Role</label>
+            <select id="role" name="role">
+                <option></option>
+                <option value="back-up-clinician">Back Up Clinician</option>
+                <option value="harm-reduction-coordinator">Harm Reduction Coordinator </option>
+                <option value="lead-clinician">Lead Clinician</option>
+                <option value="outreach">Outreach</option>
+                <option value="new-volunteer">New Volunteer</option>
+                <option value="scribe">Scribe</option>
+                <option value="strike-force-scribe">Strike Force Scribe</option>
+                <option value="supply-manager">Supply Manager</option>
+                <option value="team-coordinator ">Team Coordinator </option>
+                <option value="strike-force-doc">Strike Force Doc</option>
+            </select>
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes"></textarea>
+            <button id="submit">Submit</button>
+        </form>
+        <div id="response">
+        </div>
+    </body>
+    <script>
+        const submitButton  = document.getElementById("submit");
+        const form = document.getElementById('form');
+        function jacobsfunc(event) {
+            event.preventDefault();
+            const body = JSON.stringify(Object.fromEntries(new FormData(form)));
+            console.log(body);
+            
+            fetch('/streetmed/api/sign-up', { method: 'POST', body })
+                .catch(err => console.error(err));;
+
+            return false;
+        }
+        submitButton.addEventListener('click', jacobsfunc);
+
+        const saturday = new Date();
+        saturday.setDate(saturday.getDate() + (6+(7-saturday.getDay())));
+        const title = document.getElementById('form-title');
+        const months = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+        ];
+
+        title.innerHTML = `Sign Up Form for Saturday ${months[saturday.getMonth()]} ${saturday.getDate()}, ${saturday.getFullYear()}`;
+    </script>
+</html>

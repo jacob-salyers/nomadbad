@@ -1,12 +1,18 @@
 package streetmed
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 	"os"
 	"strings"
 )
 
+type SignUpRequest struct {
+    Name string `json:"name"`
+    Role string `json:"role"`
+    Notes string `json:"notes"`
+}
 
 var fileMap map[string]string
 var files []string
@@ -51,6 +57,12 @@ func init() {
         if err != nil { log.Println(err); w.WriteHeader(500); }
 
         return
+    }))
+
+    http.Handle("POST /streetmed/api/sign-up", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        signup := SignUpRequest{}
+        json.NewDecoder(r.Body).Decode(&signup)
+        log.Println(signup)
     }))
 
     http.Handle("/streetmed/", http.StripPrefix("/streetmed/", http.FileServer(http.Dir("streetmed-static"))))
