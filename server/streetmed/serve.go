@@ -2,6 +2,7 @@ package streetmed
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -63,6 +64,37 @@ func init() {
         signup := SignUpRequest{}
         json.NewDecoder(r.Body).Decode(&signup)
         log.Println(signup)
+    }))
+
+    http.Handle("POST /streetmed/api/onboard", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        f, err := os.OpenFile("./onboarding.json", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+        if err != nil {
+            log.Print(err)
+            w.WriteHeader(500)
+            return
+        }
+
+        defer r.Body.Close()
+        byt, err := ioutil.ReadAll(r.Body)
+        if err != nil {
+            log.Print(err)
+            w.WriteHeader(500)
+            return
+        }
+
+        _, err = f.Write(byt)
+        if err != nil {
+            log.Print(err)
+            w.WriteHeader(500)
+            return
+        }
+
+        err = f.Close()
+        if err != nil {
+            log.Print(err)
+            w.WriteHeader(500)
+            return
+        }
     }))
 
     http.Handle("/streetmed/", http.StripPrefix("/streetmed/", http.FileServer(http.Dir("streetmed-static"))))

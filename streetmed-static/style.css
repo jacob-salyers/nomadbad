@@ -39,7 +39,7 @@ td {
 form {
   background-color: #eee;
   display: grid;
-  grid-gap: 1em;
+  grid-gap: .45em;
   padding: 1em;
   max-width: 40ch;
   width: 100%;
@@ -75,6 +75,9 @@ form input[type="submit"]:active, button:active {
   background-color: #b2b2d5;
 }
 
+label {
+}
+
 footer {
   margin-top: 3em;
   padding-top: 1.5em;
@@ -91,6 +94,7 @@ a {
     margin-bottom: 0px;
     padding-top: 0px;
     padding-bottom: 0px;
+    text-align: center;
 }
 
 #response {

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Notion internal integration example" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+        <title>Streetmed Onboarding</title>
+        <link rel="stylesheet" href="/streetmed/style.css" />
+    </head>
+    <body>
+        <form id="form">
+            <p id="form-title">Streetmed Onboarding</p>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name"/>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email"/>
+
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone"/>
+
+            <label for="discord">Discord User Id</label>
+            <input type="text" id="discord" name="discord"/>
+
+            <label for="role">Role</label>
+            <select name="role" id="role">
+                <option></option>
+                <option value="Attending">Attending</option>
+                <option value="Fellow">Fellow</option>
+                <option value="Resident">Resident</option>
+                <option value="Nurse Practitioner">Nurse Practitioner</option>
+                <option value="Social Worker">Social Worker</option>
+                <option value="Medical Student">Medical Student</option>
+                <option value="Software Engineer">Software Engineer</option>
+                <option value="Fellow">Fellow</option>
+                <option value="Registered Nurse">Registered Nurse</option>
+                <option value="Physician Assistant">Physician Assistant</option>
+                <option value="Case Worker">Case Worker</option>
+                <option value="Paramedic / EMT">Paramedic / EMT</option>
+                <option value="Pharmacist">Pharmacist</option>
+            </select>
+
+            <label for="affiliation">Affiliation</label>
+            <select name="affiliation" id="affiliation">
+                <option></option>
+                <option value="St Louis University">St Louis University</option>
+                <option value="Washington University">Washington University</option>
+                <option value="Mercy">Mercy</option>
+                <option value="Affinia">Affinia</option>
+                <option value="The T">The T</option>
+            </select>
+
+            <label for="specialty">Specialty</label>
+            <select name="specialty" id="specialty">
+                <option></option>
+                <option value="Internal Medicine">Internal Medicine</option>
+                <option value="Emergency Medicine">Emergency Medicine</option>
+                <option value="Family Medicine">Family Medicine</option>
+                <option value="Critical Care">Critical Care</option>
+                <option value="Addiction Medicine">Addiction Medicine</option>
+                <option value="Infectious Disease">Infectious Disease</option>
+                <option value="Anesthesiology">Anesthesiology</option>
+                <option value="Psychiatry">Psychiatry</option>
+                <option value="Pulmonology">Pulmonology</option>
+            </select>
+
+            <button id="submit">Submit</button>
+        </form>
+        <script>
+            const submitButton  = document.getElementById("submit");
+            const form = document.getElementById('form');
+            function jacobsfunc(event) {
+                event.preventDefault();
+                const body = JSON.stringify(Object.fromEntries(new FormData(form)));
+
+                fetch('/streetmed/api/onboard', { method: 'POST', body })
+                    .catch(err => console.error(err));
+
+                form.innerHTML = '<p id="form-title">Thanks!<br>Refresh the page to submit again.</p>';
+                return false;
+            }
+            submitButton.addEventListener('click', jacobsfunc);
+        </script>
+    </body>
+</html>
