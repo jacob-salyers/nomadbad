@@ -98,6 +98,19 @@ func init() {
     }))
 
     http.Handle("/streetmed/api/discord", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        if !verifyDiscordSSLCert(r) {
+            w.WriteHeader(401)
+            return 
+        }
+
+        b, e := ioutil.ReadAll(r.Body)
+        if e != nil {
+            log.Println(e)
+            w.WriteHeader(500)
+            return
+        }
+
+        log.Println(string(b))
         return
     }))
 

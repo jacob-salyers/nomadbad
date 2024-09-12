@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"html"
 	"log"
+	"net/http"
 	"os"
 	"regexp"
 	"sort"
@@ -188,3 +189,10 @@ func uniqueWords(in string) []string {
     return out
 }
 
+
+// TODO (jacob): finish this
+//               https://github.com/discord/discord-interactions-js/blob/main/src/index.ts
+//               line 136:
+func verifyDiscordSSLCert(r *http.Request) bool {
+    return true
+}
