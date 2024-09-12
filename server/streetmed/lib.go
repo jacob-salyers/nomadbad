@@ -214,8 +214,9 @@ func verifyDiscordSSLCert(w http.ResponseWriter, r *http.Request) bool {
 
 }
 
-func parseDiscordCred(b []byte) (string, string, string) {
-    var id, pubkey, token string
+func parseDiscordCred(b []byte) (string, crypto.PublicKey, string) {
+    var id, token string
+    var pubkey crypto.PublicKey
     for _, line := range strings.Split(string(b), "\n") {
         arr := strings.Split(line, "\t")
         k := arr[0]
@@ -225,7 +226,7 @@ func parseDiscordCred(b []byte) (string, string, string) {
         case "appid":
             id = v
         case "pubkey":
-            pubkey = v
+            pubkey = crypto.PublicKey(v)
         case "token":
             token = v
         default:
