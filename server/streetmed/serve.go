@@ -97,6 +97,10 @@ func init() {
         }
     }))
 
+    http.Handle("/streetmed/api/discord", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        return
+    }))
+
     http.Handle("/streetmed/", http.StripPrefix("/streetmed/", http.FileServer(http.Dir("streetmed-static"))))
     http.Handle("/streetmed/files/", http.StripPrefix("/streetmed/files/", http.FileServer(http.Dir("streetmed-files"))))
 }
