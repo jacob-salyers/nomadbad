@@ -2,6 +2,7 @@ package streetmed
 
 import (
 	"encoding/json"
+	crypto "crypto/ed25519"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -19,7 +20,17 @@ var fileMap map[string]string
 var files []string
 var treeConst tree
 
+var _DISCORD_PUBLIC_KEY crypto.PublicKey
+
 func init() {
+
+    b,e := os.ReadFile("cred/discord_api.txt")
+    if e != nil {
+        log.Fatalln(e)
+    }
+    
+    _, _DISCORD_PUBLIC_KEY, _ = parseDiscordCred(b)
+
     // initialize file map
     fileMap = make(map[string]string)
     dirEntries, err := os.ReadDir("streetmed-data")
@@ -99,8 +110,9 @@ func init() {
 
     // TODO (jacob): fix magic numbers
     http.Handle("/streetmed/api/discord", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-        if !verifyDiscordSSLCert(r) {
+        if !verifyDiscordSSLCert(w, r) {
             w.WriteHeader(401)
+            w.Write([]byte("[discord-interactions] Invalid signature"))
             return 
         }
 

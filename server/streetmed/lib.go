@@ -2,9 +2,11 @@ package streetmed
 
 import (
 	"bufio"
+	crypto "crypto/ed25519"
 	"errors"
 	"fmt"
 	"html"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -193,6 +195,44 @@ func uniqueWords(in string) []string {
 // TODO (jacob): finish this
 //               https://github.com/discord/discord-interactions-js/blob/main/src/index.ts
 //               line 136:
-func verifyDiscordSSLCert(r *http.Request) bool {
-    return true
+func verifyDiscordSSLCert(w http.ResponseWriter, r *http.Request) bool {
+    timestamp := r.Header.Get("X-Signature-Timestamp")
+    signature := r.Header.Get("X-Signature-Ed25519")
+    log.Printf("timestamp: '%s'", timestamp)
+    log.Printf("signature: '%s'", signature)
+
+    if timestamp == "" || signature == "" {
+        return false
+    }
+
+    b, e := ioutil.ReadAll(r.Body)
+    if e != nil {
+        log.Println(e)
+        return false
+    }
+    return crypto.Verify(_DISCORD_PUBLIC_KEY, b, []byte(signature))
+
+}
+
+func parseDiscordCred(b []byte) (string, string, string) {
+    var id, pubkey, token string
+    for _, line := range strings.Split(string(b), "\n") {
+        arr := strings.Split(line, "\t")
+        k := arr[0]
+        v := arr[1]
+
+        switch k {
+        case "appid":
+            id = v
+        case "pubkey":
+            pubkey = v
+        case "token":
+            token = v
+        default:
+            log.Fatalf("unrecognized discord cred key '%s'", k)
+        }
+
+    }
+
+    return id, pubkey, token
 }
