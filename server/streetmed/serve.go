@@ -97,6 +97,7 @@ func init() {
         }
     }))
 
+    // TODO (jacob): fix magic numbers
     http.Handle("/streetmed/api/discord", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
         if !verifyDiscordSSLCert(r) {
             w.WriteHeader(401)
@@ -106,12 +107,15 @@ func init() {
         b, e := ioutil.ReadAll(r.Body)
         if e != nil { log.Println(e); w.WriteHeader(500); return; }
 
-        var jsonobj map[string]any
+        var jsonreq map[string]any
 
-        e = json.Unmarshal(b, &jsonobj)
+        e = json.Unmarshal(b, &jsonreq)
         if e != nil { log.Println(e); w.WriteHeader(500); return; }
 
-        log.Println(jsonobj["type"])
+        b, e = json.Marshal(map[string]any{ "type": 1 })
+        if e != nil { log.Println(e); w.WriteHeader(500); return; }
+
+        w.Write(b)
 
         return
     }))
