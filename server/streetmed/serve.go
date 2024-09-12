@@ -104,13 +104,15 @@ func init() {
         }
 
         b, e := ioutil.ReadAll(r.Body)
-        if e != nil {
-            log.Println(e)
-            w.WriteHeader(500)
-            return
-        }
+        if e != nil { log.Println(e); w.WriteHeader(500); return; }
 
-        log.Println(string(b))
+        var jsonobj map[string]any
+
+        e = json.Unmarshal(b, &jsonobj)
+        if e != nil { log.Println(e); w.WriteHeader(500); return; }
+
+        log.Println(jsonobj["type"])
+
         return
     }))
 
