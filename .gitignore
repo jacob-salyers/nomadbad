@@ -2,11 +2,15 @@
 .*.swp
 .*.swo
 
+
+nohup.out
+
 nomad
 rr/target
 cred/
 data/
 streetmed-data/
+streetmed-files/
 debugging
 
 server/credentials.go
