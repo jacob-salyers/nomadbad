@@ -4,8 +4,10 @@
 
 nomad
 rr/target
-static/
 cred/
+data/
+streetmed-data/
+debugging
 
 server/credentials.go
 config/
